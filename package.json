@@ -1,0 +1,28 @@
+{
+  "name": "webpack-basics",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build": "webpack --devtool source-map",
+    "start": "webpack-dev-server -d"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "jquery": "^3.6.0",
+    "lodash-es": "^4.17.15",
+    "tmi.js": "^1.8.5"
+  },
+  "devDependencies": {
+    "css-loader": "^3.5.2",
+    "dotenv-webpack": "^7.1.0",
+    "html-webpack-plugin": "^4.2.0",
+    "styles-loader": "^2.0.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

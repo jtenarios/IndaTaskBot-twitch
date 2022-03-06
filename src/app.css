@@ -1,0 +1,93 @@
+/* Fuente : https://www.freecodecamp.org/news/html-page-width-height/ */
+
+body {
+    width: 350px;
+    height: 525px;
+    margin: 0 auto;
+    background-color: #ffecd2;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+div {
+    /* border-style: solid; */
+}
+
+#divTaskList {
+    border-color: red;
+    /*height: 400px;*/
+}
+
+img#emoteId {
+    height: 200px;
+    width: 200px;
+}
+
+
+/* #divSo { */
+
+
+/* # para buscar por id */
+
+
+/*     position: absolute;
+    top: 32%;
+    left: 41%;
+    border-color: rgb(2, 238, 226);
+    text-align: center;
+    background-color: transparent;
+} */
+
+.textstyle {
+    background-color: rgb(156, 0, 0);
+    color: white;
+    /* Changing background color */
+    font-weight: bold;
+    /* Making font bold */
+    border-radius: 20px;
+    /* Making border radius */
+    width: auto;
+    /* Making auto-sizable width */
+    height: auto;
+    /* Making auto-sizable height */
+    padding: 5px 30px 5px 30px;
+    /* Making space around letters */
+    font-size: 18px;
+    /* Changing font size */
+}
+
+.container {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+    position: relative;
+    display: inline !important;
+}
+
+li {
+    height: 40px;
+}
+
+.circular--square {
+    /* . para buscar por class */
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.parent_div {
+    position: relative
+}
+
+.child_div {
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    bottom: 0%;
+    right: 0%;
+    text-align: center;
+}
