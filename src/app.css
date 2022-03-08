@@ -1,47 +1,46 @@
 /* Fuente : https://www.freecodecamp.org/news/html-page-width-height/ */
 
+/* OBS Custom CSS: body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; opacity:0.9;} */
+
 body {
     width: 600px;
-    height: 240px;
-    margin: 0;
+    height: 240px;    
         
     font-family: 'Courier New', Courier, monospace;
-    font-size: x-large;    
+    font-size: large;
+    margin: 0;
     overflow: hidden;
     opacity:0.9;
-    border-color: greenyellow;    
     /* border-style: solid; */
     
 }
 
 div {
-    /* border-style: solid; */
-    background: rgb(0, 0, 0);        
+    /* border-style: solid; */    
+    background: rgb(0, 0, 0);
     color: white;    
 }
 
 #divTaskListHeader{
     height: 30px;    
-    border-color: blue;    
     padding-left: 30px;
 }
 
-#divTaskList {    
+#divTaskList {
+    width: 600px;
+    height: 180px;
     position:relative;
-    border-color: red;
     padding-left: 30px;
 }
 
 #divAvatarImg{
-    border-color: white;
+    /* background-color: white; */
     vertical-align: bottom;
-    height: 120px;
-    width: 120px;    
     z-index: 1; /* Poner DIV al fondo */
 }
 
 #divAvatarName{
-    border-color: pink;
+    /* background-color: pink; */
     vertical-align: top;
     z-index: 1; /* Poner DIV al fondo */
 }
@@ -50,7 +49,7 @@ div {
     z-index: 1; /* Poner DIV al fondo */
 }
 
-#divSo { 
+#divSo {
     z-index: 1; /* Poner DIV al fondo */
 }
 

@@ -84,7 +84,7 @@ function onMessageHandler(target, context, msg, self) {
         client.action(target, `Servicios operativos...`)
     } else {
         //client.say(target, `* Unknown command ${commandName}`);
-        console.log(`* Unknown command ${commandName}`);
+        //console.log(`* Unknown command ${commandName}`);
     }
 }
 
@@ -103,7 +103,11 @@ function rollDice() {
 
 function addTask(target, context, task) {
     let findUser = context.username;
-    let myTask = task.replace('<', '&lt;').replace('>', '&gt;').substr(1, 30); // Para evitar inyeccion de codigo
+    let myTask = task.replace('<', '&lt;').replace('>', '&gt;'); // Para evitar inyeccion de codigo
+
+    if (myTask.length > 23) {
+        myTask = task.substr(0, 23) + ' ...';
+    }
 
     // Busca al usuario findUser en el json
     let userId = taskListJson['todo'].findIndex(usuario => usuario.user === findUser);
@@ -208,10 +212,10 @@ function kiss(target, context, user2) {
     }
 
     console.log('kiss')
-        // Mostrar div
+    // Mostrar div
     showDiv("divEmotes", "/src/Hearts.webp");
     // Ocultar div a los 5 seg.
-    setTimeout(function() { hideDiv("divEmotes") }, 5000);
+    setTimeout(function () { hideDiv("divEmotes") }, 5000);
 }
 
 async function showAvatar(profileName) {
@@ -223,7 +227,7 @@ async function showAvatar(profileName) {
         showDiv("divAvatarImg", avatarImagen);
         showDiv("divAvatarName", profileName);
         // Ocultar div a los 5 seg.
-        setTimeout(function() {
+        setTimeout(function () {
             hideDiv("divAvatarImg", avatarImagen);
             hideDiv("divAvatarName", profileName);
         }, 5000);
@@ -364,13 +368,13 @@ function activeScroll() {
     function moveTop() {
         doom('.container ul').animate({
             top: -tickerHeight
-        }, 600, function() {
+        }, 600, function () {
             doom('.container ul li:first-child').appendTo('.container ul');
             doom('.container ul').css('top', '');
         });
     }
 
-    var refreshId = setInterval(function() {
+    var refreshId = setInterval(function () {
         // Ejecutar solo cuando haya 10 o más elementos en la lista
 
         let tickerLength = taskListJson['todo'].length;
