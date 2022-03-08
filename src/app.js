@@ -15,7 +15,7 @@ import 'animate.css';
 
 
 //-------------------------------------------------
-let taskListJson = { "todo": [{ "user": "Parrish", "task": "Freida Chaney" }, { "user": "Cook", "task": "Dillon Lawrence" }, { "user": "Hurley", "task": "Rocha Schultz" }, { "user": "Marshall", "task": "Bean Guzman" }, { "user": "Lauren", "task": "Russo Green" }, { "user": "Julianne", "task": "Nina Boone" }, { "user": "Sutton", "task": "Leta Cobb" }, { "user": "Dale", "task": "Lorna Harrington" }] };
+let taskListJson = { "todo": [{ "user": "Parrish", "task": "Freida Chaney" }, { "user": "Cook", "task": "Dillon Lawrence" }, { "user": "Hurley", "task": "Rocha Schultz" }, { "user": "Marshall", "task": "Bean Guzman" }] };
 //let taskListJson = { "todo": [] };
 let taskListHtml;
 let tasksDone = 0;
@@ -103,7 +103,7 @@ function rollDice() {
 
 function addTask(target, context, task) {
     let findUser = context.username;
-    let myTask = task.replace('<', '&lt;').replace('>', '&gt;'); // Para evitar inyeccion de codigo
+    let myTask = task.replace('<', '&lt;').replace('>', '&gt;').substr(1, 30); // Para evitar inyeccion de codigo
 
     // Busca al usuario findUser en el json
     let userId = taskListJson['todo'].findIndex(usuario => usuario.user === findUser);
@@ -174,7 +174,7 @@ function changeText() {
     document.body.appendChild(component());*/
 
     const appDivTaskListHeader = document.getElementById("divTaskListHeader");
-    appDivTaskListHeader.innerHTML = `<h2>Tareas completadas: ${tasksDone} <h2>`;
+    appDivTaskListHeader.innerHTML = `<h3>Tareas completadas: ${tasksDone} </h3>`;
 
     taskListHtml = '';
     // Recorrer json array si hay tareas pendientes
@@ -377,7 +377,7 @@ function activeScroll() {
         console.log('tickerLength', tickerLength);
         console.log('setInterval')
 
-        if (tickerLength >= 9) {
+        if (tickerLength >= 5) {
             moveTop();
         } else {
             clearInterval(refreshId)

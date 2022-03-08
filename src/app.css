@@ -1,42 +1,65 @@
 /* Fuente : https://www.freecodecamp.org/news/html-page-width-height/ */
 
 body {
-    width: 350px;
-    height: 525px;
-    margin: 0 auto;
-    background-color: #ffecd2;
+    width: 600px;
+    height: 240px;
+    margin: 0;
+        
     font-family: 'Courier New', Courier, monospace;
+    font-size: x-large;    
+    overflow: hidden;
+    opacity:0.9;
+    border-color: greenyellow;    
+    /* border-style: solid; */
+    
 }
 
 div {
     /* border-style: solid; */
+    background: rgb(0, 0, 0);        
+    color: white;    
 }
 
-#divTaskList {
+#divTaskListHeader{
+    height: 30px;    
+    border-color: blue;    
+    padding-left: 30px;
+}
+
+#divTaskList {    
+    position:relative;
     border-color: red;
-    /*height: 400px;*/
+    padding-left: 30px;
+}
+
+#divAvatarImg{
+    border-color: white;
+    vertical-align: bottom;
+    height: 120px;
+    width: 120px;    
+    z-index: 1; /* Poner DIV al fondo */
+}
+
+#divAvatarName{
+    border-color: pink;
+    vertical-align: top;
+    z-index: 1; /* Poner DIV al fondo */
+}
+
+#divEmotes{
+    z-index: 1; /* Poner DIV al fondo */
+}
+
+#divSo { 
+    z-index: 1; /* Poner DIV al fondo */
 }
 
 img#emoteId {
-    height: 200px;
-    width: 200px;
+    height: 180px;
+    width: 180px;
 }
 
-
-/* #divSo { */
-
-
-/* # para buscar por id */
-
-
-/*     position: absolute;
-    top: 32%;
-    left: 41%;
-    border-color: rgb(2, 238, 226);
-    text-align: center;
-    background-color: transparent;
-} */
-
+/* Para mostrar divSo */
 .textstyle {
     background-color: rgb(156, 0, 0);
     color: white;
@@ -69,11 +92,10 @@ ul {
 }
 
 li {
-    height: 40px;
+    height: 40px;    
 }
 
 .circular--square {
-    /* . para buscar por class */
     border-radius: 50%;
     width: 150px;
     height: 150px;
