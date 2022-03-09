@@ -1,7 +1,6 @@
 import { component } from "./component";
 import "./app.css";
 import { getAvatar } from "./apiTwitch";
-
 import 'animate.css';
 
 //import file from './apiTwitch'
@@ -360,34 +359,34 @@ function activeScroll() {
     //Referencia: https://codepen.io/IamAdarsh/pen/LYEGPgw
     console.log('Inicio - activeScroll');
 
-    let doom = require('jQuery');
+    // let doom = require('jQuery');
 
-    //var tickerLength = $('.container ul li').length;
-    let tickerHeight = doom('.container ul li').outerHeight();
+    // //var tickerLength = $('.container ul li').length;
+    // let tickerHeight = doom('.container ul li').outerHeight();
 
-    doom('.container ul li:last-child').prependTo('.container ul');
-    doom('.container ul').css('marginTop', -tickerHeight);
+    // doom('.container ul li:last-child').prependTo('.container ul');
+    // doom('.container ul').css('marginTop', -tickerHeight);
 
-    function moveTop() {
-        doom('.container ul').animate({
-            top: -tickerHeight
-        }, 600, function () {
-            doom('.container ul li:first-child').appendTo('.container ul');
-            doom('.container ul').css('top', '');
-        });
-    }
+    // function moveTop() {
+    //     doom('.container ul').animate({
+    //         top: -tickerHeight
+    //     }, 600, function () {
+    //         doom('.container ul li:first-child').appendTo('.container ul');
+    //         doom('.container ul').css('top', '');
+    //     });
+    // }
 
-    var refreshId = setInterval(function () {
-        // Ejecutar solo cuando haya 10 o más elementos en la lista
+    // var refreshId = setInterval(function () {
+    //     // Ejecutar solo cuando haya 10 o más elementos en la lista
 
-        let tickerLength = taskListJson['todo'].length;
-        console.log('tickerLength', tickerLength);
-        console.log('setInterval')
+    //     let tickerLength = taskListJson['todo'].length;
+    //     console.log('tickerLength', tickerLength);
+    //     console.log('setInterval')
 
-        if (tickerLength >= 5) {
-            moveTop();
-        } else {
-            clearInterval(refreshId)
-        }
-    }, 2000);
+    //     if (tickerLength >= 5) {
+    //         moveTop();
+    //     } else {
+    //         clearInterval(refreshId)
+    //     }
+    // }, 2000);
 }
