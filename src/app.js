@@ -357,15 +357,18 @@ function hideDiv(divName, param1, param2) {
 // Hacer que el divTaskList haga scroll de forma automática
 function activeScroll() {
     //Referencia: https://codepen.io/IamAdarsh/pen/LYEGPgw
-    console.log('Inicio - activeScroll');
 
     // let doom = require('jQuery');
 
     // //var tickerLength = $('.container ul li').length;
     // let tickerHeight = doom('.container ul li').outerHeight();
+    let tickerHeight = $('.container ul li').outerHeight();
 
     // doom('.container ul li:last-child').prependTo('.container ul');
     // doom('.container ul').css('marginTop', -tickerHeight);
+
+    $('.container ul li:last-child').prependTo('.container ul');
+    $('.container ul').css('marginTop', -tickerHeight);
 
     // function moveTop() {
     //     doom('.container ul').animate({
@@ -376,17 +379,24 @@ function activeScroll() {
     //     });
     // }
 
-    // var refreshId = setInterval(function () {
-    //     // Ejecutar solo cuando haya 10 o más elementos en la lista
+    function moveTop() {
+        $('.container ul').animate({
+            top: -tickerHeight
+        }, 600, function () {
+            $('.container ul li:first-child').appendTo('.container ul');
+            $('.container ul').css('top', '');
+        });
+    }
 
-    //     let tickerLength = taskListJson['todo'].length;
-    //     console.log('tickerLength', tickerLength);
-    //     console.log('setInterval')
+    var refreshId = setInterval(function () {
+        // Ejecutar solo cuando haya 10 o más elementos en la lista
 
-    //     if (tickerLength >= 5) {
-    //         moveTop();
-    //     } else {
-    //         clearInterval(refreshId)
-    //     }
-    // }, 2000);
+        let tickerLength = taskListJson['todo'].length;
+
+        if (tickerLength >= 5) {
+            moveTop();
+        } else {
+            clearInterval(refreshId)
+        }
+    }, 2000);
 }
