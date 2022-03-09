@@ -2,38 +2,51 @@
 
 /* OBS Custom CSS: body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; opacity:0.9;} */
 
+/* width: 600px;
+height: 180+20 = 200 */
+
 body {
     width: 600px;
-    height: 240px;    
         
     font-family: 'Courier New', Courier, monospace;
     font-size: large;
     margin: 0;
-    overflow: hidden;
-    opacity:0.9;
+    overflow: hidden;    
+    background-color: brown;
     /* border-style: solid; */
     
 }
 
 div {
-    /* border-style: solid; */    
-    background: rgb(0, 0, 0);
-    color: white;    
+    /* border-style: solid; */        
+    color: white;      
+}
+
+h3{
+    margin: 0%;
 }
 
 #divTaskListHeader{
-    height: 30px;    
+    /* height: 30px;     */
     padding-left: 30px;
+    background: rgb(0, 0, 0);
+    opacity:0.9;
+    height: 20px;
 }
 
 #divTaskList {
-    width: 600px;
-    height: 180px;
+    /* width: 600px;
+    height: 180px; */
     position:relative;
     padding-left: 30px;
+    background: rgb(0, 0, 0);
+    opacity:0.9;
+    height: 180px;
 }
 
 #divAvatarImg{
+    /* height: 200px;
+    width: 200px; */
     /* background-color: white; */
     vertical-align: bottom;
     z-index: 1; /* Poner DIV al fondo */
@@ -41,6 +54,8 @@ div {
 
 #divAvatarName{
     /* background-color: pink; */
+    /* height: 120px;
+    width: 120px;     */
     vertical-align: top;
     z-index: 1; /* Poner DIV al fondo */
 }
@@ -96,8 +111,8 @@ li {
 
 .circular--square {
     border-radius: 50%;
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
 }
 
 .parent_div {
@@ -106,8 +121,6 @@ li {
 
 .child_div {
     position: absolute;
-    height: 200px;
-    width: 200px;
     bottom: 0%;
     right: 0%;
     text-align: center;

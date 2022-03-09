@@ -106,7 +106,7 @@ function addTask(target, context, task) {
     let myTask = task.replace('<', '&lt;').replace('>', '&gt;'); // Para evitar inyeccion de codigo
 
     if (myTask.length > 23) {
-        myTask = task.substr(0, 23) + ' ...';
+        myTask = task.substr(0, 23) + '...';
     }
 
     // Busca al usuario findUser en el json
@@ -162,7 +162,13 @@ function editTask(target, context, task) {
         // Eliminar tarea
         taskListJson['todo'].splice(userId);
         // Anyadir tarea
-        taskListJson['todo'].push({ user: context.username, task: task });
+        let myTask = task.replace('<', '&lt;').replace('>', '&gt;'); // Para evitar inyeccion de codigo
+
+        if (myTask.length > 23) {
+            myTask = task.substr(0, 23) + '...';
+        }
+
+        taskListJson['todo'].push({ user: context.username, task: myTask });
         client.say(target, `${context.username}  Tarea modificada`);
         changeText();
     }
@@ -202,13 +208,10 @@ function changeText() {
 
 function kiss(target, context, user2) {
 
-    let existsUser = taskListJson['todo'].find(x => x.user == context.username);
-    console.log('existsUser', existsUser);
-
     if (context.username.toLowerCase() === user2.toLowerCase()) {
-        client.say(target, `${context.username}  se besó a sí mismo <3<3 `);
+        client.say(target, `${context.username}  se besó a sí mismo <3 `);
     } else {
-        client.say(target, `${context.username}  besó a ${user2} <3 `);
+        client.say(target, `${context.username}  le dio un beso a ${user2} <3 `);
     }
 
     console.log('kiss')
