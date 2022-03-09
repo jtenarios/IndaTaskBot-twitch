@@ -31,6 +31,8 @@ const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack"); // version Heroku
 
+//const Dotenv = require('dotenv-webpack'); //--version local
+
 module.exports = {
     entry: "./src/app.js",
     output: {
@@ -48,6 +50,7 @@ module.exports = {
             filename: "index.html",
             template: "./index.html",
         }),
+        //new Dotenv(), //--version local
         // version para subir a heroku // fuente: https://stackoverflow.com/questions/59759085/heroku-failed-to-load-env
         new webpack.DefinePlugin({
             'process.env': {

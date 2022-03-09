@@ -49,3 +49,15 @@ nodemon ./src/server.js
 #     1. npm run build --> Construir el proyecto
 #     2. Guardar los cambios en github
 #     3. Desplegar la rama Heroku-web
+
+# Como consigo que me funcione en local:
+#     0. Poner el webpack.config.js en versio local
+#     1. npm run build --> Construir el proyecto
+#     2. Heroku local --> Arrancar el servidor en http://localhost:5000/
+#
+
+# Comando para subir a heroku
+#     0. Poner el webpack.config.js en versio Heroku
+#     1. npm run build --> Construir el proyecto
+#     2. Guardar los cambios en github
+#     3. Desplegar la rama Heroku-branch

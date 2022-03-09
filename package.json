@@ -4,8 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "webpack --devtool source-map",
-    "start": "webpack-dev-server -d"
+    "dev": "webpack serve",
+    "start": "node server.js",
+    "build": "webpack --mode production"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
