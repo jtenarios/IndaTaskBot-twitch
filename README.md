@@ -39,3 +39,5 @@ nodemon ./src/server.js
 # npm install animate.css --save # https://animate.style/
 
 # npm install dotenv-webpack --save-dev // https://www.npmjs.com/package/dotenv-webpack"# jymybot-twitch"  git init
+
+# Ejecutar en local: npm run start
