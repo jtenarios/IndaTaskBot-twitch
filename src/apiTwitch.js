@@ -16,29 +16,11 @@ async function getToken() {
     });
     const data = await response.json();
 
-    console.log(data);
-    console.log(data.access_token);
+    //console.log(data);
+    //console.log(data.access_token);
 
     return data.access_token
 }
-
-// Para avatar (Thumbnail) de un usuario Twitch a través de la API
-//export async function getAvatar(profileName) {
-/*     export async function getAvatar(profileName) {
-    const apiToken = await getToken();
-    const responseAvatar = await fetch('https://api.twitch.tv/helix/users?id=141981764', {
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + apiToken,
-            'Client-ID': '2if94w92tsd1r9u4j08o8s1cn6kc24',
-
-        }
-    })
-    const dataAvatar = await responseAvatar.json();
-
-    console.log('dataAvatar', dataAvatar.data[0].profile_image_url);
-    return dataAvatar.data[0].profile_image_url; 
-}*/
 
 // Search Channels by query
 // https://dev.twitch.tv/docs/api/reference#search-channels
@@ -50,12 +32,12 @@ export async function getAvatar(profileName) {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + apiToken,
-            'Client-ID': '2if94w92tsd1r9u4j08o8s1cn6kc24',            
+            'Client-ID': process.env.CLIENT_ID,
 
         }
     })
     const resultData = await getData.json();
-    console.log('resultData', resultData);
+    //console.log('resultData', resultData);
     return resultData.data[0].thumbnail_url;
 
     // Aqui en resultData tenemos todos los nombres que empienzan por el nombre de usuario

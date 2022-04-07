@@ -1,22 +1,12 @@
-import { component } from "./component";
 import "./app.css";
 import { getAvatar } from "./apiTwitch";
-
 import 'animate.css';
 
-//import file from './apiTwitch'
 
-//import "./apiTwitch";
+let taskListJson = {
+    "todo": []
+};
 
-
-/*--------------- TODO ------------------------------
-    * El comando Edit no funciona
---------------- TODO ------------------------------*/
-
-
-//-------------------------------------------------
-let taskListJson = { "todo": [{ "user": "Parrish", "task": "Freida Chaney" }, { "user": "Cook", "task": "Dillon Lawrence" }, { "user": "Hurley", "task": "Rocha Schultz" }, { "user": "Marshall", "task": "Bean Guzman" }] };
-//let taskListJson = { "todo": [] };
 let taskListHtml;
 let tasksDone = 0;
 
@@ -56,8 +46,8 @@ function onMessageHandler(target, context, msg, self) {
     // Remove whitespace from chat message
     const commandName = msg.trim().toLowerCase();
 
-    console.log('target', target);
-    console.log('context', context);
+    //console.log('target', target);
+    //console.log('context', context);
 
     // If the command is known, let's execute it
     if (commandName.startsWith("!add ")) {
@@ -83,6 +73,7 @@ function onMessageHandler(target, context, msg, self) {
     } else if (commandName === '!status') {
         client.action(target, `Servicios operativos...`)
     } else {
+        null;
         //client.say(target, `* Unknown command ${commandName}`);
         //console.log(`* Unknown command ${commandName}`);
     }
@@ -91,7 +82,7 @@ function onMessageHandler(target, context, msg, self) {
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler(addr, port) {
     changeText(); // Carga lista inicial
-    console.log(`* Connected to ${addr}:${port}`);
+    //console.log(`* Connected to ${addr}:${port}`);
     client.action('Jymy_', `Iniciando servicios...`)
 }
 
@@ -111,18 +102,19 @@ function addTask(target, context, task) {
 
     // Busca al usuario findUser en el json
     let userId = taskListJson['todo'].findIndex(usuario => usuario.user === findUser);
+    console.log(taskListJson, userId);
 
-    if (userId > 0) {
-        // No se pude anyadir mas de una tarea por usuario
-        client.say(target, `${findUser}  No se puede añadir más de una tarea`);
-    } else {
+    if (userId < 0) {
         // Anyadir tarea
         taskListJson['todo'].push({ user: findUser, task: myTask });
         client.say(target, `${findUser}  Tarea añadida`);
         changeText();
+    } else {
+        // No se pude anyadir mas de una tarea por usuario
+        client.say(target, `${findUser}  No se puede añadir más de una tarea`);
     }
 
-    console.log(`* End addTask`)
+    //console.log(`* End addTask`)
 }
 
 function deleteTask(target, context) {
@@ -130,7 +122,7 @@ function deleteTask(target, context) {
 
     // Busca al usuario findUser en el json
     let userId = taskListJson['todo'].findIndex(usuario => usuario.user === findUser);
-    console.log('userId', userId);
+    //console.log('userId', userId);
 
     if (userId < 0) {
         // No se pude anyadir mas de una tarea por usuario
@@ -153,7 +145,7 @@ function doneTask(target, context) {
 function editTask(target, context, task) {
     let findUser = context.username;
     let userId = taskListJson['todo'].findIndex(usuario => usuario.user === findUser);
-    console.log('existsUser', findUser);
+    //console.log('existsUser', findUser);
 
     if (userId < 0) {
         // No se pude anyadir mas de una tarea por usuario
@@ -175,8 +167,8 @@ function editTask(target, context, task) {
 }
 
 function changeText() {
-    console.log(`* changeText`)
-    console.log('taskListJson["todo"]', taskListJson['todo'])
+    //console.log(`* changeText`)
+    //console.log('taskListJson["todo"]', taskListJson['todo'])
 
     //document.body.appendChild(component());
 
@@ -214,7 +206,7 @@ function kiss(target, context, user2) {
         client.say(target, `${context.username}  le dio un beso a ${user2} <3 `);
     }
 
-    console.log('kiss')
+    //console.log('kiss')
     // Mostrar div
     showDiv("divEmotes", "/src/Hearts.webp");
     // Ocultar div a los 5 seg.
@@ -225,7 +217,7 @@ async function showAvatar(profileName) {
     // async function
     try {
         let avatarImagen = await getAvatar(profileName.toLowerCase());
-        console.log('avatarImagen', avatarImagen);
+        //console.log('avatarImagen', avatarImagen);
         // Mostrar div
         showDiv("divAvatarImg", avatarImagen);
         showDiv("divAvatarName", profileName);
@@ -235,13 +227,13 @@ async function showAvatar(profileName) {
             hideDiv("divAvatarName", profileName);
         }, 5000);
     } catch (expception) {
-        console.log('expception', expception);
+        //console.log('expception', expception);
     }
 
 }
 
 function showDiv(divName, param1) {
-    console.log('showDiv', divName)
+    //console.log('showDiv', divName)
 
     let divItem = document.getElementById(divName);
     divItem.style.zIndex = "3"; // poner el div al frente
@@ -320,7 +312,7 @@ function showDiv(divName, param1) {
 }
 
 function hideDiv(divName, param1, param2) {
-    console.log('hideDiv', divName)
+    //console.log('hideDiv', divName)
     let divItem = document.getElementById(divName);
     divItem.style.zIndex = "1"; // poner el div atrás
 
@@ -358,7 +350,7 @@ function hideDiv(divName, param1, param2) {
 // Hacer que el divTaskList haga scroll de forma automática
 function activeScroll() {
     //Referencia: https://codepen.io/IamAdarsh/pen/LYEGPgw
-    console.log('Inicio - activeScroll');
+    //console.log('Inicio - activeScroll');
 
     let doom = require('jQuery');
 
@@ -381,8 +373,8 @@ function activeScroll() {
         // Ejecutar solo cuando haya 10 o más elementos en la lista
 
         let tickerLength = taskListJson['todo'].length;
-        console.log('tickerLength', tickerLength);
-        console.log('setInterval')
+        //console.log('tickerLength', tickerLength);
+        //console.log('setInterval')
 
         if (tickerLength >= 5) {
             moveTop();
