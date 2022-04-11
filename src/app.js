@@ -102,7 +102,6 @@ function addTask(target, context, task) {
 
     // Busca al usuario findUser en el json
     let userId = taskListJson['todo'].findIndex(usuario => usuario.user === findUser);
-    console.log(taskListJson, userId);
 
     if (userId < 0) {
         // Anyadir tarea
