@@ -83,7 +83,7 @@ function onMessageHandler(target, context, msg, self) {
 function onConnectedHandler(addr, port) {
     changeText(); // Carga lista inicial
     //console.log(`* Connected to ${addr}:${port}`);
-    client.action('Jymy_', `Iniciando servicios...`)
+    client.action(process.env.CHANNELS, `Iniciando servicios...`)
 }
 
 // Function called when the "dice" command is issued
@@ -207,9 +207,9 @@ function kiss(target, context, user2) {
 
     //console.log('kiss')
     // Mostrar div
-    showDiv("divEmotes", "/src/Hearts.webp");
+    //showDiv("divEmotes", "/src/Hearts.webp");
     // Ocultar div a los 5 seg.
-    setTimeout(function () { hideDiv("divEmotes") }, 5000);
+    //setTimeout(function () { hideDiv("divEmotes") }, 5000);
 }
 
 async function showAvatar(profileName) {

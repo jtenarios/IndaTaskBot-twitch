@@ -41,3 +41,4 @@ nodemon ./src/server.js
 # npm install dotenv-webpack --save-dev // https://www.npmjs.com/package/dotenv-webpack"# jymybot-twitch"  git init
 
 # Ejecutar en local: npm run start
+# Para crear la build: npm run build
