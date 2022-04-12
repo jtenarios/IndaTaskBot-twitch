@@ -7,65 +7,69 @@ height: 180+20 = 200 */
 
 body {
     width: 600px;
-        
+
     font-family: 'Courier New', Courier, monospace;
     font-size: large;
     margin: 0;
-    overflow: hidden;    
+    overflow: hidden;
     /* background-color: brown; */
     /* border-style: solid; */
-    
+
 }
 
 div {
-    /* border-style: solid; */        
-    color: white;      
+    /* border-style: solid; */
+    color: white;
 }
 
-h3{
+h3 {
     margin: 0%;
 }
 
-#divTaskListHeader{
+#divTaskListHeader {
     /* height: 30px;     */
     padding-left: 30px;
     background: rgb(0, 0, 0);
-    opacity:0.9;
+    opacity: 0.9;
     height: 20px;
 }
 
 #divTaskList {
     /* width: 600px;
     height: 180px; */
-    position:relative;
+    position: relative;
     padding-left: 30px;
     background: rgb(0, 0, 0);
-    opacity:0.9;
+    opacity: 0.9;
     height: 180px;
 }
 
-#divAvatarImg{
+#divAvatarImg {
     /* height: 200px;
     width: 200px; */
     /* background-color: white; */
     vertical-align: bottom;
-    z-index: 1; /* Poner DIV al fondo */
+    z-index: 1;
+    /* Poner DIV al fondo */
 }
 
-#divAvatarName{
+#divAvatarName {
     /* background-color: pink; */
     /* height: 120px;
     width: 120px;     */
     vertical-align: top;
-    z-index: 1; /* Poner DIV al fondo */
+    z-index: 1;
+    /* Poner DIV al fondo */
 }
 
-#divEmotes{
-    z-index: 1; /* Poner DIV al fondo */
+#divEmotes {
+    z-index: 1;
+    /* Poner DIV al fondo */
 }
 
 #divSo {
-    z-index: 1; /* Poner DIV al fondo */
+    z-index: 1;
+    /* Poner DIV al fondo */
 }
 
 img#emoteId {
@@ -105,8 +109,14 @@ ul {
     display: inline !important;
 }
 
+ol {
+    list-style: none;
+    position: relative;
+    display: inline !important;
+}
+
 li {
-    height: 40px;    
+    height: 40px;
 }
 
 .circular--square {

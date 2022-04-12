@@ -4,11 +4,18 @@ import 'animate.css';
 
 
 let taskListJson = {
-    "todo": []
+    "todo": [
+        // { id: 1, user: "User 1", task: "Task 1" },
+        // { id: 2, user: "User 2", task: "Task 2" },
+        // { id: 3, user: "User 3", task: "Task 3" },
+        // { id: 4, user: "User 4", task: "Task 4" },
+        // { id: 5, user: "User 5", task: "Task 5" },
+    ]
 };
 
 let taskListHtml;
 let tasksDone = 0;
+let taskId = 0;
 
 // Conectar con Twitch
 const tmi = require('tmi.js');
@@ -55,6 +62,9 @@ function onMessageHandler(target, context, msg, self) {
         addTask(target, context, task);
     } else if (commandName === "!delete") {
         deleteTask(target, context);
+    } else if (commandName.startsWith("!delete ")) {
+        const taskId = commandName.replace("!delete ", "");
+        deleteModeratorTask(target, context, taskId);
     } else if (commandName === "!done") {
         doneTask(target, context);
     } else if (commandName.startsWith("!edit ")) {
@@ -105,7 +115,8 @@ function addTask(target, context, task) {
 
     if (userId < 0) {
         // Anyadir tarea
-        taskListJson['todo'].push({ user: findUser, task: myTask });
+        taskId = taskId + 1;
+        taskListJson['todo'].push({ id: taskId, user: findUser, task: myTask });
         client.say(target, `${findUser}  Tarea añadida`);
         changeText();
     } else {
@@ -128,10 +139,35 @@ function deleteTask(target, context) {
         client.say(target, `${findUser}  No hay ninguna tarea pendiente`);
     } else {
         // Eliminar tarea
-        taskListJson['todo'].splice(userId);
+        taskListJson['todo'].splice(userId, 1);
         client.say(target, `${findUser}  Tarea eliminada`);
         changeText();
     }
+}
+
+function deleteModeratorTask(target, context, taskId) {
+    let findUser = context.username;
+
+    // Solo los moderadores pueden eliminar tareas de otros usuarios
+    if (!(context.mod || context['user-type'] === 'mod')) {
+        client.say(target, `${findUser}  Comando reservado para moderadores`);
+    } else {
+        // Busca la tarea con id taskId en el json
+        let id = taskListJson['todo'].findIndex(tarea => tarea.id == taskId);
+
+        if (id < 0) {
+            // No existe la taskId 
+            client.say(target, `${findUser}  No existe la tarea con id ${taskId}`);
+        } else {
+            // Eliminar tarea
+            taskListJson['todo'].splice(id, 1);
+            client.say(target, `${findUser}  Tarea eliminada`);
+            changeText();
+        }
+    }
+
+
+
 }
 
 function doneTask(target, context) {
@@ -180,14 +216,16 @@ function changeText() {
     taskListHtml = '';
     // Recorrer json array si hay tareas pendientes
     for (let x of taskListJson['todo']) {
+        console.log(x);
         // Si lista vacia
         if (taskListHtml === '') {
-            taskListHtml = '<li><b>' + x.user + ':</b> ' + x.task + '</li>'
+            taskListHtml = '<li>' + x.id + '. <b>' + x.user + ':</b> ' + x.task + '</li>'
         } else {
-            taskListHtml = taskListHtml + '<li><b>' + x.user + ':</b> ' + x.task + '</li>'
+            taskListHtml = taskListHtml + '<li>' + x.id + '. <b>' + x.user + ':</b> ' + x.task + '</li>'
         }
     }
     // class="no-bullets", para que no pinte los bullets point
+    // taskListHtml = '<ul class="no-bullets">' + taskListHtml + "</ul>"
     taskListHtml = '<ul class="no-bullets">' + taskListHtml + "</ul>"
 
     const appDivTaskList = document.getElementById("divTaskList");
