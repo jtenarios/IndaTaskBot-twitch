@@ -16,6 +16,6 @@ Pueden entontrar el código inicial que pueden usar para seguir el ejemplo en el
  CLIENT_SECRET = 'xxx'  # Twitch-bot password 
 ```
 
-Ejecutar en local: `npm run start`
-
-Para crear la build: `npm run build`
+## Comandos:
+* Ejecutar en local: `npm run start`
+* Para crear la build: `npm run build`
