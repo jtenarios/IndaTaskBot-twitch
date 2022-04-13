@@ -10,7 +10,7 @@ Pueden entontrar el código inicial que pueden usar para seguir el ejemplo en el
 ```
  USERNAME = 'xxx'       # Twitch user name
  PASSWORD = 'oauth:xxx' # Twitch password
- CHANNELS ='xxx'        # Destiny channel
+ CHANNELS = 'xxx'       # Destiny channel
  
  CLIENT_ID = 'xxx'      # Twitch-bot user name
  CLIENT_SECRET = 'xxx'  # Twitch-bot password 
