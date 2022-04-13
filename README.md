@@ -1,9 +1,7 @@
-## Proyecto usado como ejemplo en el video:
+## Webpacks Tutorial:
+* https://www.youtube.com/watch?v=FMNuTj89RzU
 * https://youtu.be/2UBKjshUwM8
 * https://www.youtube.com/watch?v=bZD8qcJIEIE&list=PL9T-KKyKXNCl7XuLL-U7i1TFg78HKCB8C&index=2
-
-Este es el resultado final del ejemplo.
-Pueden entontrar el código inicial que pueden usar para seguir el ejemplo en el branch *starting-code*.
 
 
 # Crear fichero .env con las claves
