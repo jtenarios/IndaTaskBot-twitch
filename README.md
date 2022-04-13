@@ -1,4 +1,6 @@
-![Twitch Logo.](https://logowik.com/content/uploads/images/twitch7714.jpg "Twitch Logo")
+# Simple TODO list Twicth  bot
+
+<img src="https://logowik.com/content/uploads/images/twitch7714.jpg" alt="Girl in a jacket" width="250" height="250">
 
 ## Webpacks Tutorial:
 * https://www.youtube.com/watch?v=FMNuTj89RzU
