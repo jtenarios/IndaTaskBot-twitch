@@ -1,3 +1,5 @@
+![Twitch Logo.](https://logowik.com/content/uploads/images/twitch7714.jpg "Twitch Logo")
+
 ## Webpacks Tutorial:
 * https://www.youtube.com/watch?v=FMNuTj89RzU
 * https://youtu.be/2UBKjshUwM8
