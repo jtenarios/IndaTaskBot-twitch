@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "build": "webpack --devtool source-map",
-    "start": "webpack-dev-server -d"
+    "start": "webpack-dev-server -d",
+    "lint": "eslint . --fix"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
@@ -14,8 +15,15 @@
     "tmi.js": "^1.8.5"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
     "css-loader": "^3.5.2",
     "dotenv-webpack": "^7.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
     "html-webpack-plugin": "^4.2.0",
     "styles-loader": "^2.0.0",
     "webpack": "^4.42.1",

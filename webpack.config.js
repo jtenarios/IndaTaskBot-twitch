@@ -1,28 +1,28 @@
-const path = require("path");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
+const path = require('path')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
 
-const Dotenv = require('dotenv-webpack');
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
-  entry: "./src/app.js",
+  entry: './src/app.js',
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
-      },
-    ],
+        use: ['style-loader', 'css-loader']
+      }
+    ]
   },
   plugins: [
     new HTMLWebpackPlugin({
-      filename: "index.html",
-      template: "./index.html",
+      filename: 'index.html',
+      template: './index.html'
     }),
     new Dotenv()
   ],
-  mode: "production",
-};
+  mode: 'production'
+}
