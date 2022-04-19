@@ -4,11 +4,11 @@ import 'animate.css'
 
 const taskListJson = {
   todo: [
-    { id: 1, user: 'Binky', task: 'Task 1 Esto es un test de una frase larga, de ejemplo y lo que puede pasar es que se acople' },
-    { id: 2, user: 'Bubba', task: 'Task 2 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
-    { id: 3, user: 'Chupy', task: 'Task 3 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
-    { id: 4, user: 'Fee Fee', task: 'Task 4 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
-    { id: 5, user: 'Hushie', task: 'Task 5 Esto es un test de una frase larga de ejemplo' }
+    // { id: 1, user: 'Binky', task: 'Task 1 Esto es un test de una frase larga, de ejemplo y lo que puede pasar es que se acople' },
+    // { id: 2, user: 'Bubba', task: 'Task 2 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
+    // { id: 3, user: 'Chupy', task: 'Task 3 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
+    // { id: 4, user: 'Fee Fee', task: 'Task 4 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
+    // { id: 5, user: 'Hushie', task: 'Task 5 Esto es un test de una frase larga de ejemplo' }
   ]
 }
 
@@ -46,7 +46,7 @@ client.on('connected', onConnectedHandler)
 client.connect()
 
 // Called every time a message comes in
-function onMessageHandler(target, context, msg, self) {
+function onMessageHandler (target, context, msg, self) {
   if (self) {
     return
   } // Ignore messages from the bot
@@ -89,13 +89,13 @@ function onMessageHandler(target, context, msg, self) {
 }
 
 // Called every time the bot connects to Twitch chat
-function onConnectedHandler(addr, port) {
+function onConnectedHandler (addr, port) {
   changeText() // Carga lista inicial
   // console.log(`* Connected to ${addr}:${port}`);
   client.action(process.env.CHANNELS, 'Iniciando servicios...')
 }
 
-function addTask(target, context, task) {
+function addTask (target, context, task) {
   const findUser = context.username
   let myTask = task.replace('<', '&lt;').replace('>', '&gt;') // Para evitar inyeccion de codigo
 
@@ -120,7 +120,7 @@ function addTask(target, context, task) {
   // console.log(`* End addTask`)
 }
 
-function deleteTask(target, context) {
+function deleteTask (target, context) {
   const findUser = context.username
 
   // Busca al usuario findUser en el json
@@ -138,7 +138,7 @@ function deleteTask(target, context) {
   }
 }
 
-function deleteModeratorTask(target, context, taskId) {
+function deleteModeratorTask (target, context, taskId) {
   const findUser = context.username
 
   // Solo los moderadores pueden eliminar tareas de otros usuarios
@@ -160,13 +160,13 @@ function deleteModeratorTask(target, context, taskId) {
   }
 }
 
-function doneTask(target, context) {
+function doneTask (target, context) {
   deleteTask(target, context)
   tasksDone = tasksDone + 1
   changeText()
 }
 
-function editTask(target, context, task) {
+function editTask (target, context, task) {
   const findUser = context.username
   const userId = taskListJson.todo.findIndex(usuario => usuario.user === findUser)
   // console.log('existsUser', findUser);
@@ -190,7 +190,7 @@ function editTask(target, context, task) {
   }
 }
 
-function listTask(target, context) {
+function listTask (target, context) {
   taskList = ''
 
   for (const x of taskListJson.todo) {
@@ -204,7 +204,7 @@ function listTask(target, context) {
   }
 }
 
-function changeText() {
+function changeText () {
   // console.log(`* changeText`)
   // console.log('taskListJson["todo"]', taskListJson['todo'])
 
@@ -237,7 +237,7 @@ function changeText() {
   activeScroll() // Activar auto scroll de la lista
 }
 
-function kiss(target, context, user2) {
+function kiss (target, context, user2) {
   if (context.username.toLowerCase() === user2.toLowerCase()) {
     client.say(target, `${context.username}  se besó a sí mismo <3 `)
   } else {
@@ -251,7 +251,7 @@ function kiss(target, context, user2) {
   // setTimeout(function () { hideDiv("divEmotes") }, 5000);
 }
 
-async function showAvatar(profileName) {
+async function showAvatar (profileName) {
   // async function
   try {
     const avatarImagen = await getAvatar(profileName.toLowerCase())
@@ -269,7 +269,7 @@ async function showAvatar(profileName) {
   }
 }
 
-function showDiv(divName, param1) {
+function showDiv (divName, param1) {
   // console.log('showDiv', divName)
 
   const divItem = document.getElementById(divName)
@@ -347,7 +347,7 @@ function showDiv(divName, param1) {
   }
 }
 
-function hideDiv(divName, param1, param2) {
+function hideDiv (divName, param1, param2) {
   // console.log('hideDiv', divName)
   const divItem = document.getElementById(divName)
   divItem.style.zIndex = '1' // poner el div atrás
@@ -381,7 +381,7 @@ function hideDiv(divName, param1, param2) {
 }
 
 // Hacer que el divTaskList haga scroll de forma automática
-function activeScroll() {
+function activeScroll () {
   // Referencia: https://codepen.io/IamAdarsh/pen/LYEGPgw
   // console.log('Inicio - activeScroll');
 
@@ -393,20 +393,20 @@ function activeScroll() {
   doom('.container ul li:last-child').prependTo('.container ul')
   doom('.container ul').css('marginTop', -tickerHeight)
 
-  function moveTop() {
+  function moveTop () {
     doom('.container ul').animate({
       top: -tickerHeight
-    }, 3000, function () { //seg en saltar a la siguiente tarea
+    }, 3000, function () { // seg en saltar a la siguiente tarea
       doom('.container ul li:first-child').appendTo('.container ul')
       doom('.container ul').css('top', '')
     })
   }
 
   if (timer) {
-    console.log('timer existe:>> ', timer);
+    console.log('timer existe:>> ', timer)
   } else {
     timer = setInterval(function () {
-      console.log('timer :>> ', timer);
+      console.log('timer :>> ', timer)
       // Ejecutar solo cuando haya 5 o más elementos en la lista
 
       const tickerLength = taskListJson.todo.length
@@ -414,17 +414,17 @@ function activeScroll() {
       // console.log('setInterval')
 
       if (tickerLength >= 5) {
-        console.log('moveTop()', new Date());
+        console.log('moveTop()', new Date())
         moveTop()
       } else {
         clearInterval(timer)
-        timer = false;
+        timer = false
       }
-    }, 3000) //seg en ejecutarse el scroll
+    }, 3000) // seg en ejecutarse el scroll
   }
 }
 
-function pad(input, length, padding) {
+function pad (input, length, padding) {
   const str = input + ''
   return (length <= str.length) ? str : pad(str + padding, length, padding)
 }
