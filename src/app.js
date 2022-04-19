@@ -4,11 +4,11 @@ import 'animate.css'
 
 const taskListJson = {
   todo: [
-    { id: 1, user: 'User 1', task: 'Task 1' },
-    { id: 2, user: 'User 2', task: 'Task 2' },
-    { id: 3, user: 'User 3', task: 'Task 3' },
-    { id: 4, user: 'User 4', task: 'Task 4' },
-    { id: 5, user: 'User 5', task: 'Task 5' }
+    { id: 1, user: 'Binky', task: 'Task 1 Esto es un test de una frase larga, de ejemplo y lo que puede pasar es que se acople' },
+    { id: 2, user: 'Bubba', task: 'Task 2 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
+    { id: 3, user: 'Chupy', task: 'Task 3 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
+    { id: 4, user: 'Fee Fee', task: 'Task 4 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
+    { id: 5, user: 'Hushie', task: 'Task 5 Esto es un test de una frase larga de ejemplo' }
   ]
 }
 
@@ -16,6 +16,7 @@ let taskListHtml
 let taskList
 let tasksDone = 0
 let taskId = 0
+let timer = false
 
 // Conectar con Twitch
 const tmi = require('tmi.js')
@@ -45,7 +46,7 @@ client.on('connected', onConnectedHandler)
 client.connect()
 
 // Called every time a message comes in
-function onMessageHandler (target, context, msg, self) {
+function onMessageHandler(target, context, msg, self) {
   if (self) {
     return
   } // Ignore messages from the bot
@@ -88,18 +89,18 @@ function onMessageHandler (target, context, msg, self) {
 }
 
 // Called every time the bot connects to Twitch chat
-function onConnectedHandler (addr, port) {
+function onConnectedHandler(addr, port) {
   changeText() // Carga lista inicial
   // console.log(`* Connected to ${addr}:${port}`);
   client.action(process.env.CHANNELS, 'Iniciando servicios...')
 }
 
-function addTask (target, context, task) {
+function addTask(target, context, task) {
   const findUser = context.username
   let myTask = task.replace('<', '&lt;').replace('>', '&gt;') // Para evitar inyeccion de codigo
 
-  if (myTask.length > 23) {
-    myTask = task.substr(0, 23) + '...'
+  if (myTask.length > 90) {
+    myTask = task.substr(0, 90) + '...'
   }
 
   // Busca al usuario findUser en el json
@@ -119,7 +120,7 @@ function addTask (target, context, task) {
   // console.log(`* End addTask`)
 }
 
-function deleteTask (target, context) {
+function deleteTask(target, context) {
   const findUser = context.username
 
   // Busca al usuario findUser en el json
@@ -137,7 +138,7 @@ function deleteTask (target, context) {
   }
 }
 
-function deleteModeratorTask (target, context, taskId) {
+function deleteModeratorTask(target, context, taskId) {
   const findUser = context.username
 
   // Solo los moderadores pueden eliminar tareas de otros usuarios
@@ -159,13 +160,13 @@ function deleteModeratorTask (target, context, taskId) {
   }
 }
 
-function doneTask (target, context) {
+function doneTask(target, context) {
   deleteTask(target, context)
   tasksDone = tasksDone + 1
   changeText()
 }
 
-function editTask (target, context, task) {
+function editTask(target, context, task) {
   const findUser = context.username
   const userId = taskListJson.todo.findIndex(usuario => usuario.user === findUser)
   // console.log('existsUser', findUser);
@@ -189,20 +190,12 @@ function editTask (target, context, task) {
   }
 }
 
-function listTask (target, context) {
-  console.log('listTask :>> Init')
+function listTask(target, context) {
   taskList = ''
 
   for (const x of taskListJson.todo) {
-    if (taskList === '') {
-      taskList = '------------------------------'
-      taskList = taskList + pad(' ' + x.id + '. ' + x.user + ': ' + x.task + ' ', 72, 'ㅤ')
-    } else {
-      taskList = taskList + pad(' ' + x.id + '. ' + x.user + ': ' + x.task + ' ', 72, 'ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ')
-    }
+    taskList = taskList + pad(' ' + x.id + '. ' + x.user + ': ' + x.task + ' ', 50, '.')
   }
-
-  console.log('taskList :>> ', taskList)
 
   if (taskList === '') {
     client.say(target, 'No hay tareas pendientes')
@@ -211,7 +204,7 @@ function listTask (target, context) {
   }
 }
 
-function changeText () {
+function changeText() {
   // console.log(`* changeText`)
   // console.log('taskListJson["todo"]', taskListJson['todo'])
 
@@ -229,9 +222,9 @@ function changeText () {
     console.log(x)
     // Si lista vacia
     if (taskListHtml === '') {
-      taskListHtml = '<li>' + x.id + '. <b>' + x.user + ':</b> ' + x.task + '</li>'
+      taskListHtml = '<li><b>' + x.user + ':</b> ' + x.task + '</li>'
     } else {
-      taskListHtml = taskListHtml + '<li>' + x.id + '. <b>' + x.user + ':</b> ' + x.task + '</li>'
+      taskListHtml = taskListHtml + '<li><b>' + x.user + ':</b> ' + x.task + '</li>'
     }
   }
   // class="no-bullets", para que no pinte los bullets point
@@ -244,7 +237,7 @@ function changeText () {
   activeScroll() // Activar auto scroll de la lista
 }
 
-function kiss (target, context, user2) {
+function kiss(target, context, user2) {
   if (context.username.toLowerCase() === user2.toLowerCase()) {
     client.say(target, `${context.username}  se besó a sí mismo <3 `)
   } else {
@@ -258,7 +251,7 @@ function kiss (target, context, user2) {
   // setTimeout(function () { hideDiv("divEmotes") }, 5000);
 }
 
-async function showAvatar (profileName) {
+async function showAvatar(profileName) {
   // async function
   try {
     const avatarImagen = await getAvatar(profileName.toLowerCase())
@@ -276,7 +269,7 @@ async function showAvatar (profileName) {
   }
 }
 
-function showDiv (divName, param1) {
+function showDiv(divName, param1) {
   // console.log('showDiv', divName)
 
   const divItem = document.getElementById(divName)
@@ -354,7 +347,7 @@ function showDiv (divName, param1) {
   }
 }
 
-function hideDiv (divName, param1, param2) {
+function hideDiv(divName, param1, param2) {
   // console.log('hideDiv', divName)
   const divItem = document.getElementById(divName)
   divItem.style.zIndex = '1' // poner el div atrás
@@ -388,7 +381,7 @@ function hideDiv (divName, param1, param2) {
 }
 
 // Hacer que el divTaskList haga scroll de forma automática
-function activeScroll () {
+function activeScroll() {
   // Referencia: https://codepen.io/IamAdarsh/pen/LYEGPgw
   // console.log('Inicio - activeScroll');
 
@@ -400,31 +393,38 @@ function activeScroll () {
   doom('.container ul li:last-child').prependTo('.container ul')
   doom('.container ul').css('marginTop', -tickerHeight)
 
-  function moveTop () {
+  function moveTop() {
     doom('.container ul').animate({
       top: -tickerHeight
-    }, 600, function () {
+    }, 3000, function () { //seg en saltar a la siguiente tarea
       doom('.container ul li:first-child').appendTo('.container ul')
       doom('.container ul').css('top', '')
     })
   }
 
-  const refreshId = setInterval(function () {
-    // Ejecutar solo cuando haya 10 o más elementos en la lista
+  if (timer) {
+    console.log('timer existe:>> ', timer);
+  } else {
+    timer = setInterval(function () {
+      console.log('timer :>> ', timer);
+      // Ejecutar solo cuando haya 5 o más elementos en la lista
 
-    const tickerLength = taskListJson.todo.length
-    // console.log('tickerLength', tickerLength);
-    // console.log('setInterval')
+      const tickerLength = taskListJson.todo.length
+      // console.log('tickerLength', tickerLength);
+      // console.log('setInterval')
 
-    if (tickerLength >= 5) {
-      moveTop()
-    } else {
-      clearInterval(refreshId)
-    }
-  }, 2000)
+      if (tickerLength >= 5) {
+        console.log('moveTop()', new Date());
+        moveTop()
+      } else {
+        clearInterval(timer)
+        timer = false;
+      }
+    }, 3000) //seg en ejecutarse el scroll
+  }
 }
 
-function pad (input, length, padding) {
+function pad(input, length, padding) {
   const str = input + ''
   return (length <= str.length) ? str : pad(str + padding, length, padding)
 }
