@@ -2,15 +2,14 @@ import './app.css'
 import { getAvatar } from './apiTwitch'
 import 'animate.css'
 
-const taskListJson = {
-  todo: [
+const taskListJson =
+  [
     // { id: 1, user: 'Binky', task: 'Task 1 Esto es un test de una frase larga, de ejemplo y lo que puede pasar es que se acople' },
     // { id: 2, user: 'Bubba', task: 'Task 2 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
     // { id: 3, user: 'Chupy', task: 'Task 3 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
     // { id: 4, user: 'Fee Fee', task: 'Task 4 Esto es un test de una frase larga de ejemplo y lo que puede pasar es que se acople' },
     // { id: 5, user: 'Hushie', task: 'Task 5 Esto es un test de una frase larga de ejemplo' }
   ]
-}
 
 let taskListHtml
 let taskList
@@ -81,7 +80,7 @@ function onMessageHandler (target, context, msg, self) {
     const profileName = commandName.replace('!apoyo ', '').replace('!so ', '').replace('@', '')
     showAvatar(profileName)
   } else if (commandName === '!status') {
-    client.action(target, 'Servicios operativos...')
+    client.action(target, 'Servicios operativos...(v2022.04.21)')
   } /* else {
     client.say(target, `* Unknown command ${commandName}`);
     console.log(`* Unknown command ${commandName}`);
@@ -104,12 +103,12 @@ function addTask (target, context, task) {
   }
 
   // Busca al usuario findUser en el json
-  const userId = taskListJson.todo.findIndex(usuario => usuario.user === findUser)
+  const userId = taskListJson.findIndex(usuario => usuario.user === findUser)
 
   if (userId < 0) {
     // Anyadir tarea
     taskId = taskId + 1
-    taskListJson.todo.push({ id: taskId, user: findUser, task: myTask })
+    taskListJson.push({ id: taskId, user: findUser, task: myTask })
     client.say(target, `${findUser}  Tarea añadida`)
     changeText()
   } else {
@@ -124,7 +123,7 @@ function deleteTask (target, context) {
   const findUser = context.username
 
   // Busca al usuario findUser en el json
-  const userId = taskListJson.todo.findIndex(usuario => usuario.user === findUser)
+  const userId = taskListJson.findIndex(usuario => usuario.user === findUser)
   // console.log('userId', userId);
 
   if (userId < 0) {
@@ -132,7 +131,7 @@ function deleteTask (target, context) {
     client.say(target, `${findUser}  No hay ninguna tarea pendiente`)
   } else {
     // Eliminar tarea
-    taskListJson.todo.splice(userId, 1)
+    taskListJson.splice(userId, 1)
     client.say(target, `${findUser}  Tarea eliminada`)
     changeText()
   }
@@ -141,42 +140,61 @@ function deleteTask (target, context) {
 function deleteModeratorTask (target, context, taskId) {
   const findUser = context.username
 
+  console.log(context)
+
   // Solo los moderadores pueden eliminar tareas de otros usuarios
-  if (!(context.mod || context['user-type'] === 'mod')) {
-    client.say(target, `${findUser}  Comando reservado para moderadores`)
-  } else {
+  if (context.mod || // moderador
+      context['user-type'] === 'mod' || // moderador
+      context['badges-raw'] === 'broadcaster/1' // Broadcaster-emisor
+  ) {
     // Busca la tarea con id taskId en el json
-    const id = taskListJson.todo.findIndex(tarea => tarea.id === taskId)
+    const id = taskListJson.findIndex(tarea => parseInt(tarea.id) === parseInt(taskId))
 
     if (id < 0) {
       // No existe la taskId
-      client.say(target, `${findUser}  No existe la tarea con id ${taskId}`)
+      client.say(target, `${findUser} No existe la tarea con id ${taskId}`)
     } else {
       // Eliminar tarea
-      taskListJson.todo.splice(id, 1)
-      client.say(target, `${findUser}  Tarea eliminada`)
+      taskListJson.splice(id, 1)
+      client.say(target, `${findUser} Tarea eliminada`)
       changeText()
     }
+  } else {
+    client.say(target, `${findUser} Comando reservado para moderadores`)
   }
 }
 
 function doneTask (target, context) {
-  deleteTask(target, context)
   tasksDone = tasksDone + 1
-  changeText()
+
+  const findUser = context.username
+
+  // Busca al usuario findUser en el json
+  const userId = taskListJson.findIndex(usuario => usuario.user === findUser)
+  // console.log('userId', userId);
+
+  if (userId < 0) {
+    // No se pude anyadir mas de una tarea por usuario
+    client.say(target, `${findUser} No hay ninguna tarea pendiente`)
+  } else {
+    // Eliminar tarea
+    taskListJson.splice(userId, 1)
+    client.say(target, `${findUser} Tarea completada, enhorabuena! A por la siguiente! B)`)
+    changeText()
+  }
 }
 
 function editTask (target, context, task) {
   const findUser = context.username
-  const userId = taskListJson.todo.findIndex(usuario => usuario.user === findUser)
+  const userId = taskListJson.findIndex(usuario => usuario.user === findUser)
   // console.log('existsUser', findUser);
 
   if (userId < 0) {
     // No se pude anyadir mas de una tarea por usuario
-    client.say(target, `${context.username}  No hay ninguna tarea pendiente`)
+    client.say(target, `${context.username} No hay ninguna tarea pendiente`)
   } else {
     // Eliminar tarea
-    taskListJson.todo.splice(userId)
+    taskListJson.splice(userId)
     // Anyadir tarea
     let myTask = task.replace('<', '&lt;').replace('>', '&gt;') // Para evitar inyeccion de codigo
 
@@ -184,8 +202,8 @@ function editTask (target, context, task) {
       myTask = task.substr(0, 23) + '...'
     }
 
-    taskListJson.todo.push({ user: context.username, task: myTask })
-    client.say(target, `${context.username}  Tarea modificada`)
+    taskListJson.push({ user: context.username, task: myTask })
+    client.say(target, `${context.username} Tarea modificada`)
     changeText()
   }
 }
@@ -193,7 +211,7 @@ function editTask (target, context, task) {
 function listTask (target, context) {
   taskList = ''
 
-  for (const x of taskListJson.todo) {
+  for (const x of taskListJson) {
     taskList = taskList + pad(' ' + x.id + '. ' + x.user + ': ' + x.task + ' ', 50, '.')
   }
 
@@ -218,7 +236,7 @@ function changeText () {
 
   taskListHtml = ''
   // Recorrer json array si hay tareas pendientes
-  for (const x of taskListJson.todo) {
+  for (const x of taskListJson) {
     console.log(x)
     // Si lista vacia
     if (taskListHtml === '') {
@@ -246,9 +264,9 @@ function kiss (target, context, user2) {
 
   // console.log('kiss')
   // Mostrar div
-  // showDiv("divEmotes", "/src/Hearts.webp");
+  showDiv('divEmotes', 'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_480012d34fc54cc68e7e6f245207c462/default/dark/3.0')
   // Ocultar div a los 5 seg.
-  // setTimeout(function () { hideDiv("divEmotes") }, 5000);
+  setTimeout(function () { hideDiv('divEmotes') }, 5000)
 }
 
 async function showAvatar (profileName) {
@@ -409,11 +427,7 @@ function activeScroll () {
       console.log('timer :>> ', timer)
       // Ejecutar solo cuando haya 5 o más elementos en la lista
 
-      const tickerLength = taskListJson.todo.length
-      // console.log('tickerLength', tickerLength);
-      // console.log('setInterval')
-
-      if (tickerLength >= 5) {
+      if (taskListJson.length >= 5) {
         console.log('moveTop()', new Date())
         moveTop()
       } else {
