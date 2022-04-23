@@ -96,11 +96,11 @@ function onConnectedHandler (addr, port) {
 
 function addTask (target, context, task) {
   const findUser = context.username
-  let myTask = task.replace('<', '&lt;').replace('>', '&gt;') // Para evitar inyeccion de codigo
+  const myTask = task.replace('<', '&lt;').replace('>', '&gt;') // Para evitar inyeccion de codigo
 
-  if (myTask.length > 90) {
-    myTask = task.substr(0, 90) + '...'
-  }
+  // if (myTask.length > 90) {
+  //   myTask = task.substr(0, 90) + '...'
+  // }
 
   // Busca al usuario findUser en el json
   const userId = taskListJson.findIndex(usuario => usuario.user === findUser)
@@ -142,11 +142,8 @@ function deleteModeratorTask (target, context, taskId) {
 
   console.log(context)
 
-  // Solo los moderadores pueden eliminar tareas de otros usuarios
-  if (context.mod || // moderador
-      context['user-type'] === 'mod' || // moderador
-      context['badges-raw'] === 'broadcaster/1' // Broadcaster-emisor
-  ) {
+  // Solo moderadores
+  if (isMod(context)) {
     // Busca la tarea con id taskId en el json
     const id = taskListJson.findIndex(tarea => parseInt(tarea.id) === parseInt(taskId))
 
@@ -196,29 +193,34 @@ function editTask (target, context, task) {
     // Eliminar tarea
     taskListJson.splice(userId)
     // Anyadir tarea
-    let myTask = task.replace('<', '&lt;').replace('>', '&gt;') // Para evitar inyeccion de codigo
+    const myTask = task.replace('<', '&lt;').replace('>', '&gt;') // Para evitar inyeccion de codigo
 
-    if (myTask.length > 23) {
-      myTask = task.substr(0, 23) + '...'
-    }
+    // if (myTask.length > 23) {
+    //   myTask = task.substr(0, 90) + '...'
+    // }
 
-    taskListJson.push({ user: context.username, task: myTask })
+    taskListJson.push({ id: userId, user: context.username, task: myTask })
     client.say(target, `${context.username} Tarea modificada`)
     changeText()
   }
 }
 
 function listTask (target, context) {
-  taskList = ''
+  // Solo moderadores
+  if (isMod(context)) {
+    taskList = ''
 
-  for (const x of taskListJson) {
-    taskList = taskList + pad(' ' + x.id + '. ' + x.user + ': ' + x.task + ' ', 50, '.')
-  }
+    for (const x of taskListJson) {
+      taskList = taskList + ' ' + x.id + '. ' + x.user + ': ' + x.task
+    }
 
-  if (taskList === '') {
-    client.say(target, 'No hay tareas pendientes')
+    if (taskList === '') {
+      client.say(target, 'No hay tareas pendientes')
+    } else {
+      client.say(target, `${taskList}`)
+    }
   } else {
-    client.say(target, `${taskList}`)
+    client.say(target, `${context.username} Comando reservado para moderadores`)
   }
 }
 
@@ -240,9 +242,9 @@ function changeText () {
     console.log(x)
     // Si lista vacia
     if (taskListHtml === '') {
-      taskListHtml = '<li><b>' + x.user + ':</b> ' + x.task + '</li>'
+      taskListHtml = '<li><b>' + x.user + ':</b> ' + x.task.substr(0, 90) + '</li>'
     } else {
-      taskListHtml = taskListHtml + '<li><b>' + x.user + ':</b> ' + x.task + '</li>'
+      taskListHtml = taskListHtml + '<li><b>' + x.user + ':</b> ' + x.task.substr(0, 90) + '</li>'
     }
   }
   // class="no-bullets", para que no pinte los bullets point
@@ -438,7 +440,13 @@ function activeScroll () {
   }
 }
 
-function pad (input, length, padding) {
-  const str = input + ''
-  return (length <= str.length) ? str : pad(str + padding, length, padding)
+function isMod (context) {
+  console.log('context', context)
+
+  // Check mod rol
+  return (context.mod || // moderador
+      context['user-type'] === 'mod' || // moderador
+      context['badges-raw'] === 'broadcaster/1' ||// Broadcaster-emisor
+      context.username.toLowerCase() === 'indagoodhouse' // Broadcaster-emisor
+  )
 }
