@@ -80,7 +80,7 @@ function onMessageHandler (target, context, msg, self) {
     const profileName = commandName.replace('!apoyo ', '').replace('!so ', '').replace('@', '')
     showAvatar(profileName)
   } else if (commandName === '!status') {
-    client.action(target, 'Servicios operativos...(v2022.04.21)')
+    client.action(target, 'Servicios operativos...(v2022.05.06)')
   } /* else {
     client.say(target, `* Unknown command ${commandName}`);
     console.log(`* Unknown command ${commandName}`);
@@ -176,7 +176,7 @@ function doneTask (target, context) {
   } else {
     // Eliminar tarea
     taskListJson.splice(userId, 1)
-    client.say(target, `${findUser} Tarea completada, enhorabuena! A por la siguiente! B)`)
+    client.say(target, `${findUser} Tarea completada, enhorabuena! A por la siguiente! SeemsGood`)
     changeText()
   }
 }
@@ -234,7 +234,7 @@ function changeText () {
     document.body.appendChild(component()); */
 
   const appDivTaskListHeader = document.getElementById('divTaskListHeader')
-  appDivTaskListHeader.innerHTML = `<h3>Tareas completadas: ${tasksDone} </h3>`
+  appDivTaskListHeader.innerHTML = `<h3>Tareas completadas: ${tasksDone} | !add !done !edit !delete</h3>`
 
   taskListHtml = ''
   // Recorrer json array si hay tareas pendientes
